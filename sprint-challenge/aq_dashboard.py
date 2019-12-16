@@ -14,7 +14,7 @@ class Record(DB.Model):
     value = DB.Column(DB.Float, nullable=False)
 
     def __repr__(self):
-        return f"<Time {self.datetime} --- Value {self.value}>"
+        return f"<br>Time {self.datetime} --- Value {self.value}"
 
 
 @APP.route('/refresh')
@@ -36,13 +36,12 @@ def refresh():
     return 'Data refreshed!'
 
 
-#api = openaq.OpenAQ()
 
 @APP.route('/')
 def root():
     """Base view."""
-    response = aq_functions.get_latest_observations()
-    return str(response)
+    danger = Record.query.filter(Record.value >= 10).all()
+    return str(danger)
 
 
 
